@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User; 
 use App\Models\Tarif;
+use App\Http\Controllers\OwnerController;
+
 
 // --- 1. HALAMAN UMUM & LOGIN ---
 Route::get('/', function () {
@@ -323,6 +325,28 @@ Route::get('/owner/rekap', function (Illuminate\Http\Request $request) {
 
     return view('owner.rekap.index', compact('rekap', 'total_pendapatan'));
 })->name('owner.rekap');
+// FITUR: Pengajuan (Owner)
+Route::get('/owner/pengajuan', function () {
+    $pengajuans = DB::table('tb_appeal')
+        ->join('tb_user', 'tb_appeal.id_user', '=', 'tb_user.id_user')
+        ->select('tb_appeal.*', 'tb_user.nama_lengkap as pengaju')
+        ->orderBy('waktu_pengajuan', 'desc')
+        ->get();
+
+    return view('owner.pengajuan.index', compact('pengajuans'));
+})->name('owner.pengajuan');
+
+// Route untuk setujui/tolak pengajuan
+Route::post('/owner/pengajuan/status/{id}', function (Illuminate\Http\Request $request, $id) {
+    DB::table('tb_appeal')->where('id_appeal', $id)->update([
+        'status' => $request->status, // 'Disetujui' atau 'Ditolak'
+        'keterangan_owner' => $request->keterangan_owner
+    ]);
+    return redirect()->back()->with('sukses', 'Status pengajuan berhasil diperbarui!');
+})->name('owner.pengajuan.status');
+
+
+
 
 
 

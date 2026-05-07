@@ -63,7 +63,7 @@
 
           <!-- Fitur: Pengajuan -->
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('owner.appeal') }}">
               <i class="ti-email menu-icon"></i>
               <span class="menu-title">Daftar Pengajuan</span>
             </a>
