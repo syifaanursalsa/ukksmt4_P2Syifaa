@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // Tambahkan ini jika belum ada
 
 class User extends Authenticatable
 {
+    use HasFactory;
     use Notifiable;
 
     protected $table = 'tb_user'; // Nama tabel kamu
