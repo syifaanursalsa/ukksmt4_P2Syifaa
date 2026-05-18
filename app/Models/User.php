@@ -4,16 +4,15 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory; // Tambahkan ini jika belum ada
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
-    use HasFactory;
-    use Notifiable;
+    use HasFactory, Notifiable;
 
-    protected $table = 'tb_user'; // Nama tabel kamu
-    protected $primaryKey = 'id_user'; // Nama ID kamu
-    public $timestamps = false; // Karena di DB kamu tidak ada created_at
+    protected $table = 'tb_user';
+    protected $primaryKey = 'id_user';
+    public $timestamps = false;
 
     protected $fillable = [
         'nama_lengkap',
@@ -22,4 +21,10 @@ class User extends Authenticatable
         'role',
         'status_aktif',
     ];
+
+    // Beritahu Laravel kalau ID-nya bukan 'id' tapi 'id_user'
+    public function getAuthIdentifierName()
+    {
+        return 'id_user';
+    }
 }

@@ -61,13 +61,14 @@
   </a>
 </li>
 
-          <!-- Fitur: Pengajuan -->
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('owner.appeal') }}">
-              <i class="ti-email menu-icon"></i>
-              <span class="menu-title">Daftar Pengajuan</span>
-            </a>
-          </li>
+       <li class="nav-item">
+  <!-- Pasang route('owner.pengajuan') di sini -->
+  <a class="nav-link" href="{{ route('owner.pengajuan') }}">
+    <i class="ti-email menu-icon"></i>
+    <span class="menu-title">Daftar Pengajuan</span>
+  </a>
+</li>
+
 
           <li class="nav-item nav-category" style="font-size: 10px; font-weight: bold;">AKUN</li>
           <li class="nav-item">

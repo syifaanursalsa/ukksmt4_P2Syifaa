@@ -68,6 +68,10 @@
             <a class="nav-link"  href="{{ route('admin.area') }}"><i class="ti-location-pin menu-icon"></i><span class="menu-title">Kelola Area Parkir</span></a>
           </li>
 
+           <li class="nav-item">
+            <a class="nav-link"  href="{{ route('admin.area') }}"><i class="ti-location-pin menu-icon"></i><span class="menu-title">pengajuan</span></a>
+          </li>
+
           <li class="nav-item nav-category" style="font-size: 10px; font-weight: bold;">LAINNYA</li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.log') }}"><i class="ti-clipboard menu-icon"></i><span class="menu-title">Log Aktivitas</span></a>

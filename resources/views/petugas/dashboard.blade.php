@@ -34,7 +34,7 @@
           <!-- Profil Petugas -->
           <li class="nav-item p-3">
              <div class="d-flex align-items-center">
-                <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center mr-2" style="width: 40px; height: 40px; font-weight: bold;">P</div>
+                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mr-2" style="width: 40px; height: 40px; font-weight: bold;">P</div>
                 <div>
                    <p class="mb-0 text-dark font-weight-bold" style="font-size: 13px;">Petugas Lapangan</p>
                    <small class="text-muted" style="font-size: 11px;">Shift Pagi</small>
@@ -43,7 +43,7 @@
           </li>
 
           <li class="nav-item nav-category" style="font-size: 10px; font-weight: bold;">OPERASIONAL</li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="#">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Dashboard</span>
@@ -51,16 +51,17 @@
           </li>
 
           <!-- Fitur: Transaksi & Cetak Struk -->
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="ti-layout-list-post menu-icon"></i>
-              <span class="menu-title">Input Transaksi</span>
-            </a>
-          </li>
+         <li class="nav-item">
+  <!-- Ubah tujuannya ke rute yang baru kita buat -->
+  <a class="nav-link" href="{{ route('petugas.transaksi.create') }}">
+    <i class="ti-layout-list-post menu-icon"></i>
+    <span class="menu-title">Input Transaksi</span>
+  </a>
+</li>
 
           <!-- Fitur: Shift -->
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('petugas.shift.index') }}">
               <i class="ti-timer menu-icon"></i>
               <span class="menu-title">Riwayat Shift</span>
             </a>
@@ -80,10 +81,10 @@
       <div class="main-panel">
         <div class="content-wrapper">
           
-          <!-- Banner Petugas (Orange agar mencolok) -->
+          <!-- Banner Petugas (DIUBAH: Menggunakan gradasi Biru Skydash) -->
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
-              <div class="card" style="background: linear-gradient(to right, #ffaf00, #ff8c00); color: white; border-radius: 10px;">
+              <div class="card" style="background: linear-gradient(to right, #4B49AC, #7DA7F8); color: white; border-radius: 10px;">
                 <div class="card-body d-flex justify-content-between align-items-center p-4">
                   <div>
                     <h2 class="font-weight-bold">Semangat Kerja, Petugas!</h2>
@@ -97,27 +98,34 @@
             </div>
           </div>
 
-          <!-- Form Transaksi Cepat (Fitur: Transaksi & Cetak Struk) -->
+          <!-- Form Transaksi Cepat -->
           <div class="row">
             <div class="col-md-5 grid-margin stretch-card">
               <div class="card shadow-sm border-0">
                 <div class="card-body">
                   <h4 class="card-title text-primary"><i class="ti-plus mr-2"></i>Parkir Masuk Baru</h4>
-                  <form>
-                    <div class="form-group">
-                      <label>Nomor Plat Kendaraan</label>
-                      <input type="text" class="form-control form-control-lg text-uppercase font-weight-bold" placeholder="Contoh: B 1234 ABC">
-                    </div>
-                    <div class="form-group">
-                      <label>Jenis Kendaraan</label>
-                      <select class="form-control">
-                        <option>Motor</option>
-                        <option>Mobil</option>
-                        <option>Truk/Bus</option>
-                      </select>
-                    </div>
-                    <button type="submit" class="btn btn-warning btn-block font-weight-bold text-white">SIMPAN & CETAK STRUK</button>
-                  </form>
+                  <form action="{{ route('petugas.parkir.masuk') }}" method="POST">
+  @csrf {{-- Wajib ada agar tidak error 419 --}}
+  
+  <div class="form-group">
+    <label>Nomor Plat Kendaraan</label>
+    <!-- Ditambahkan atribut name="plat_nomor" dan required -->
+    <input type="text" name="plat_nomor" class="form-control form-control-lg text-uppercase font-weight-bold" placeholder="Contoh: B 1234 ABC" required>
+  </div>
+  
+  <div class="form-group">
+    <label>Jenis Kendaraan</label>
+    <!-- Ditambahkan atribut name="jenis_kendaraan" dan value di setiap option -->
+    <select name="jenis_kendaraan" class="form-control" required>
+      <option value="Motor">Motor</option>
+      <option value="Mobil">Mobil</option>
+      <option value="Truk/Bus">Truk/Bus</option>
+    </select>
+  </div>
+  
+  <button type="submit" class="btn btn-primary btn-block font-weight-bold text-white">SIMPAN & CETAK STRUK</button>
+</form>
+
                 </div>
               </div>
             </div>

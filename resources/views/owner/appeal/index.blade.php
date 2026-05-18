@@ -47,7 +47,8 @@
                     <tr>
                       <th>Waktu</th>
                       <th>Pengaju</th>
-                      <th>Perihal</th>
+                      <th>Judul</th>
+                      <th>Deskripsi</th>
                       <th>Status</th>
                       <th>Aksi</th>
                     </tr>
@@ -55,20 +56,25 @@
                   <tbody>
                     @forelse($pengajuans as $p)
                     <tr>
-                      <td>{{ $p->waktu_pengajuan }}</td>
+                      <!-- 1. DISESUAIKAN: Menggunakan created_at sesuai database -->
+                      <td>{{ $p->created_at }}</td>
                       <td class="font-weight-bold">{{ $p->pengaju }}</td>
-                      <td>{{ $p->perihal }}</td>
+                      <!-- 2. DISESUAIKAN: Diubah dari perihal menjadi judul -->
+                      <td>{{ $p->judul }}</td>
+                      <!-- 3. DITAMBAHKAN: Kolom deskripsi pengajuan -->
+                      <td>{{ $p->deskripsi }}</td>
                       <td>
-                        @if($p->status == 'Pending')
-                          <label class="badge badge-warning">Menunggu</label>
-                        @elseif($p->status == 'Disetujui')
-                          <label class="badge badge-success">Disetujui</label>
+                        <!-- 4. DISESUAIKAN: Pengecekan status huruf kecil sesuai phpMyAdmin -->
+                        @if($p->status == 'proses')
+                          <label class="badge badge-warning">Proses</label>
+                        @elseif($p->status == 'selesai')
+                          <label class="badge badge-success">Selesai</label>
                         @else
-                          <label class="badge badge-danger">Ditolak</label>
+                          <label class="badge badge-secondary">{{ $p->status }}</label>
                         @endif
                       </td>
                       <td>
-                        @if($p->status == 'Pending')
+                        @if($p->status == 'proses')
                           <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalProses{{ $p->id_appeal }}">Proses</button>
                         @else
                           <small class="text-muted">Sudah diproses</small>
@@ -87,17 +93,18 @@
                               <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                             </div>
                             <div class="modal-body">
-                              <p><b>Isi Pengajuan:</b><br>{{ $p->pesan }}</p>
+                              <!-- 5. DISESUAIKAN: Menampilkan isi deskripsi pengajuan di modal -->
+                              <p><b>Isi Pengajuan:</b><br>{{ $p->deskripsi }}</p>
                               <div class="form-group">
                                 <label>Keputusan</label>
                                 <select name="status" class="form-control text-dark" required>
-                                  <option value="Disetujui">Setujui</option>
-                                  <option value="Ditolak">Tolak</option>
+                                  <option value="selesai">Selesaikan</option>
+                                  <option value="proses">Biarkan Proses</option>
                                 </select>
                               </div>
                               <div class="form-group">
-                                <label>Catatan Owner</label>
-                                <textarea name="keterangan_owner" class="form-control" rows="3"></textarea>
+                                <label>Catatan Owner (Balasan)</label>
+                                <textarea name="keterangan_owner" class="form-control" rows="3" required>{{ $p->balasan }}</textarea>
                               </div>
                             </div>
                             <div class="modal-footer">
@@ -108,7 +115,7 @@
                       </div>
                     </div>
                     @empty
-                    <tr><td colspan="5" class="text-center">Belum ada pengajuan.</td></tr>
+                    <tr><td colspan="6" class="text-center">Belum ada pengajuan.</td></tr>
                     @endforelse
                   </tbody>
                 </table>
